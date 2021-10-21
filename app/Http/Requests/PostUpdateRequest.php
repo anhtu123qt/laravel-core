@@ -26,6 +26,7 @@ class PostUpdateRequest extends FormRequest
         return [
             'title' => 'required',
             'body' => 'required',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg',
         ];
     }
     public function attributes()
@@ -33,6 +34,7 @@ class PostUpdateRequest extends FormRequest
         return [
             'title' => 'Title',
             'body' => 'Content',
+            'image' => 'Image',
         ];
     }
 
@@ -40,6 +42,7 @@ class PostUpdateRequest extends FormRequest
     {
         return [
             'required' => 'Please fill this field!',
+            'image' => 'This field must be image!',
         ];
     }
 }

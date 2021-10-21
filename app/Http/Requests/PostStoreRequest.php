@@ -27,6 +27,7 @@ class PostStoreRequest extends FormRequest
         return [
             'title' => 'required',
             'body' => 'required',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg',
         ];
     }
     public function attributes()
@@ -34,6 +35,7 @@ class PostStoreRequest extends FormRequest
         return [
             'title' => 'Title',
             'body' => 'Content',
+            'image' => 'Image',
         ];
     }
 
@@ -41,6 +43,7 @@ class PostStoreRequest extends FormRequest
     {
         return [
             'required' => 'Please fill this field!',
+            'image' => 'Please select a image',
         ];
     }
 }

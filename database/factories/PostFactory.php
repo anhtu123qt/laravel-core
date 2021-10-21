@@ -22,9 +22,10 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' =>1,
+            'user_id' =>$this->faker->numberBetween(1,11),
             'title' =>$this->faker->sentence(5),
             'body' =>$this->faker->text(3000),
+            'image'=>'1.png',
             'created_at' =>$this->faker->dateTimeBetween('-5 week','now' ),
         ];
     }
