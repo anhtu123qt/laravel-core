@@ -6,6 +6,9 @@
     interface PostRepositoryInterface extends RepositoryInterface 
     {
         public function getPostLastest();
+        
+        public function getPost();
+
     }
     
 ?>

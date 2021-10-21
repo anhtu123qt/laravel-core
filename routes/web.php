@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
+Route::group([
+    'middleware' => 'auth',
+    'prefix' => 'admin'
+], function () {
+    Route::get('/dashboard',[UserController::class,'dashboard'])->name('dashboard');
+    Route::resource('posts',PostController::class);
+    Route::get('posts/active-post/{id}',[PostController::class,'activePost'])->name('posts.active');
+    Route::get('/dashboard/statistic',[UserController::class,'getAll']);
+});
 
 require __DIR__.'/auth.php';
