@@ -135,7 +135,7 @@ class PostController extends Controller
     public function activePost($id)
     {
         $post = $this->postRepo->find($id);
-        if($post->is_active == 0) {
+        if(!$post->is_active) {
             $post->is_active = 1;
             $post->publicted_at = Carbon::now();
             $post->save();
