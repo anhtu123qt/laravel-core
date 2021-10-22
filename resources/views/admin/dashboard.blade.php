@@ -12,11 +12,14 @@
                         <div id="app">
                             <div class="container">
                                 <base-title title="Hello {{ auth()->user()->name }} !"></base-title>
+
                                 <div>
                                     <h4 class="text-center">Statistic Post</h4>
-                                    @foreach ($users as $user)
+                                    @forelse ($users as $user)
                                         <li>{{ $user->name }} / Post ( {{ $user->posts_count }} )</li>
-                                    @endforeach
+                                    @empty
+                                        <p>No user</p>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>

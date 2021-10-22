@@ -1,14 +1,18 @@
 <?php
-    namespace App\Repositories\Post;
 
-    use App\Repositories\RepositoryInterface;
+namespace App\Repositories\Post;
 
-    interface PostRepositoryInterface extends RepositoryInterface 
-    {
-        public function getPostLastest();
+use App\Models\Post;
+use App\Repositories\RepositoryInterface;
+
+interface PostRepositoryInterface extends RepositoryInterface 
+{
+    public function getPostsLastest();
         
-        public function getPost();
+    public function getPosts();
 
-    }
+    public function find(Post $post);
+
+}
     
 ?>

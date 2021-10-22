@@ -1,6 +1,4 @@
 <?php
-
-
     namespace App\Repositories;
     
     use Illuminate\Support\Facades\Log;
@@ -36,7 +34,7 @@
             return $this->model->all();
         }
 
-        public function find($id) 
+        public function getOne($id) 
         {
             DB::beginTransaction();
             try {
@@ -45,8 +43,9 @@
 
                 return $data;
             } catch (\Exception $e) {
-                return 'General error: '.$e->getMessage();
                 DB::rollback();
+
+                return 'General error: '.$e->getMessage();
             }
         }
         
@@ -56,10 +55,12 @@
             try {
                 $data = $this->model->create($attrs);
                 DB::commit();
+
                 return $data;
             } catch (\Exception $e) {
-                return 'General error: '.$e->getMessage();
                 DB::rollback();
+
+                return 'General error: '.$e->getMessage();
             }   
                
         }
@@ -68,16 +69,19 @@
         {
             DB::beginTransaction();        
             try {
-                $data = $this->find($id);
+                $data = $this->getOne($id);
                 if($data) {
                     $data->update($attrs);
                     $data->save();
                     DB::commit();
+
                     return $data;
                 }
             } catch (\Exception $e) {
-                return 'General error: '.$e->getMessage();
                 DB::rollback();
+
+                return 'General error: '.$e->getMessage();
+
             }
         }
 
@@ -85,14 +89,17 @@
         {
             DB::beginTransaction();
             try {
-                $data = $this->find($id);
+                $data = $this->getOne($id);
                 if($data) {
                     $data->delete();
                     DB::commit();
+
+                    return true;
                 }
             } catch (\Exception $e) {
-                 return 'General error: '.$e->getMessage();
-                 DB::rollback();
+                DB::rollback();
+
+                return 'General error: '.$e->getMessage();
             }
         }
 
