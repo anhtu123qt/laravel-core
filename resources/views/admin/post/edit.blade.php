@@ -29,6 +29,10 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                         <base-upload-image name="image" label="Upload Image"></base-upload-image>
+                                        <div class="mb-3">
+                                            <img
+                                                src="{{ asset('/storage/upload/posts/' . $post->user_id . '/' . $post->image) }}">
+                                        </div>
                                         @error('image')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror

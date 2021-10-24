@@ -30,7 +30,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($posts as $post)
+                                    @forelse ($posts as $post)
                                         <tr>
                                             <th scope="row">{{ $post->id }}</th>
                                             <td>{{ $post->title }}</td>
@@ -58,7 +58,9 @@
                                                 </base-button>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <h4 class="text-center">Opps!There is no post in DB!</h4>
+                                    @endforelse
                                 </tbody>
                             </table>
                             {{ $posts->links() }}

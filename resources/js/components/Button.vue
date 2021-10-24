@@ -25,7 +25,8 @@ export default {
     },
     computed:{
       fullRoute() {
-        return this.route + "/" + this.param1 + "/" + this.param2;
+        // return this.route + "/" + this.param1 + "/" + this.param2;
+        return "${this.route}/${param1}/${param2}";
       }
     },
     methods:{
