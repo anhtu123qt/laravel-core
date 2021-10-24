@@ -13,7 +13,7 @@
          * Get one
          * @return mixed
          */
-        public function find($id);
+        public function getOne($id);
 
         /**
          * Create
