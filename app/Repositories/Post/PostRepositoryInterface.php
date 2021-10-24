@@ -3,7 +3,6 @@
 namespace App\Repositories\Post;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Repositories\RepositoryInterface;
 
 interface PostRepositoryInterface extends RepositoryInterface 

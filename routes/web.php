@@ -26,6 +26,6 @@ Route::group([
     Route::resource('posts', PostController::class);
     Route::get('posts/active-post/{id}', [PostController::class, 'activePost'])->name('posts.active');
     //Accessors
-    Route::get('/accessors/{id}', [UserController::class,'accessors']);
+    Route::get('/accessors/{id}', [UserController::class, 'accessors']);
 });
 require __DIR__.'/auth.php';
