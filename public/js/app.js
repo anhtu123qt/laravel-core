@@ -4034,6 +4034,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     btnClass: String,
@@ -4050,11 +4051,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     fullRoute: function fullRoute() {
       // return this.route + "/" + this.param1 + "/" + this.param2;
-<<<<<<< HEAD
       return "${this.route}/${param1}/${param2}";
-=======
-      return "`${this.route}/${param1}/${param2}`";
->>>>>>> 668aecf1dd071409d6253b857ebae1591260b64e
     }
   },
   methods: {

@@ -12,15 +12,15 @@
                         <div id="app">
                             <div class="container">
                                 <base-title title="Hello {{ auth()->user()->name }} !"></base-title>
-
-                                <div>
-                                    <h4 class="text-center">Statistic Post</h4>
-                                    @forelse ($users as $user)
-                                        <li>{{ $user->name }} / Post ( {{ $user->posts_count }} )</li>
+                                <h3 class="text-center">List Admin</h3>
+                                <ul>
+                                    @forelse ($admins as $admin )
+                                        <li class="text-center">{{ $admin->name }} / {{ $admin->email }}</li>
                                     @empty
-                                        <p>No user</p>
+                                        <h5 class="text-center py-5">There are no admins here!</h5>
                                     @endforelse
-                                </div>
+                                    <li></li>
+                                </ul>
                             </div>
                         </div>
                     </div>

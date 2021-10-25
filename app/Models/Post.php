@@ -16,11 +16,12 @@ class Post extends Model
         'image',
     ];
     protected $table = 'posts';
+
     public function users()
     {
         return $this->belongsTo(Post::class);
     }
     // Status post
     const ACTIVE = 1; 
-    const INACTIVE = 0; 
+    const INACTIVE = 0;
 }

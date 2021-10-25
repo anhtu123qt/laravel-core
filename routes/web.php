@@ -18,14 +18,14 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::group([
     'middleware' => 'auth',
     'prefix' => 'admin'
 ], function () {
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::resource('posts', PostController::class);
     Route::get('posts/active-post/{id}', [PostController::class, 'activePost'])->name('posts.active');
-    //Accessors
-    Route::get('/accessors/{id}', [UserController::class, 'accessors']);
+    Route::resource('users', UserController::class);
+    Route::get('dashboard', [UserController::class, 'getAdmin'])->name('dashboard');
 });
 require __DIR__.'/auth.php';
