@@ -51,5 +51,15 @@ class User extends Authenticatable
     {
         return strtoupper($value);
     }
+
+    public function getDateCreateAttribute()
+    {
+        return $this->created_at->format('H:m:s d-m-Y');
+    }
+    // Scope
+    public function scopeAdmin($query)
+    {
+        $query->where('is_admin', 1);
+    }
    
 }

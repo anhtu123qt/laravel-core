@@ -3,8 +3,9 @@
         <button 
         :route="fullRoute" 
         :class="btnClass" 
-        :type="btnType" 
-        @click="onClick">
+        :type="btnType"
+        @click="onClick"
+        >
         {{btnName}}
         </button>
     </div>

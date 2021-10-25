@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Post\PostRepository;
+use App\Repositories\User\UserRepository;
 use App\Repositories\Post\PostRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PostRepositoryInterface::class,
             PostRepository::class,
+        );
+        $this->app->bind(
+            UserRepositoryInterface::class,
+            UserRepository::class,
         );
     }
 
