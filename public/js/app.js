@@ -4050,7 +4050,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     fullRoute: function fullRoute() {
-      // return this.route + "/" + this.param1 + "/" + this.param2;
       return "${this.route}/${param1}/${param2}";
     }
   },

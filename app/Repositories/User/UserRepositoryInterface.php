@@ -11,7 +11,7 @@ interface UserRepositoryInterface extends RepositoryInterface
 
     public function createUser(array $data);
     
-    public function findUserById(User $user);
+    public function findUserById($userId);
 
     public function getAdmin();
 }
