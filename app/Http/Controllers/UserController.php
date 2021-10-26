@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\UserService;
-use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -26,7 +24,7 @@ class UserController extends Controller
     {
         $users = $this->userService->getAllUserWithPost();
 
-        return view('admin.user.index',compact('users'));
+        return view('admin.user.index', compact('users'));
     }
 
     /**
@@ -48,12 +46,11 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         try {
-            $data = $request->all();
-            $this->userService->createUser($data);
+            $this->userService->createUser($request->all());
     
-            return redirect()->route('users.index')->with('success','Add user successfully!');
-        } catch (\Throwable $th) {
-            Log::error($th);
+            return redirect()->route('users.index')->with('success', 'Add user successfully!');
+        } catch (\Exception $e) {
+            return abort(500);
         }
     }
 
@@ -63,12 +60,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         try {
-           return $this->userService->findUserById($user);
-        } catch (\Throwable $th) {
-            Log::error($th);
+            return $this->userService->findUserById($id);
+        } catch (\Exception $e) {
+            return abort(500);
         }
     }
 
@@ -78,14 +75,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
         try {
-            $user = $this->userService->findUserById($user);
+            $user = $this->userService->findUserById($id);
 
-            return view('admin.user.edit',compact('user'));
-        } catch (\Throwable $th) {
-            Log::error($th);
+            return view('admin.user.edit', compact('user'));
+        } catch (\Exception $e) {
+            return abort(500);
         }
     }
 
@@ -96,15 +93,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id)
     {
         try {
-            $data = $request->only('name','email');
-            $this->userService->updateUser($data,$user);
+            $data = $request->only('name', 'email');
+            $this->userService->updateUser($data, $id);
 
-            return redirect()->route('users.index')->with('success','Update User Successfully!');
-        } catch (\Throwable $th) {
-            Log::error($th);
+            return redirect()->route('users.index')->with('success', 'Update User Successfully!');
+        } catch (\Exception $e) {
+            return abort(500);
         }
     }
 
@@ -114,15 +111,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
         try {
-            $this->userService->deleteUser($user);
+            $this->userService->deleteUser($id);
 
-            return redirect()->back()->with('success','Delete User Successfully!');
-        } catch (\Throwable $th) {
-            Log::error($th);
-        } 
+            return redirect()->back()->with('success', 'Delete User Successfully!');
+        } catch (\Exception $e) {
+            return abort(500);
+        }
     }
 
     public function getAdmin()
@@ -130,9 +127,9 @@ class UserController extends Controller
         try {
             $admins = $this->userService->getAdmin();
             
-            return view('admin.dashboard',compact('admins'));
-        } catch (\Throwable $th) {
-        Log::error($th);
+            return view('admin.dashboard', compact('admins'));
+        } catch (\Exception $e) {
+            return abort(500);
         }
     }
 }

@@ -46,7 +46,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
-    // Accessors
+
     public function getNameAttribute($value)
     {
         return strtoupper($value);
@@ -56,10 +56,12 @@ class User extends Authenticatable
     {
         return $this->created_at->format('H:m:s d-m-Y');
     }
-    // Scope
+
+    const ROLE_ADMIN = 1;
+    
     public function scopeAdmin($query)
     {
-        $query->where('is_admin', 1);
+        $query->where('is_admin', self::ROLE_ADMIN);
     }
    
 }

@@ -9,14 +9,9 @@ interface PostRepositoryInterface extends RepositoryInterface
 {
     public function getPostsLastest();
         
-    public function getPosts();
+    public function getAllPosts();
 
-    public function find(Post $post);
-
-    public function createPost(array $attrs);
-
-    public function updatePost(array $attrs,$id);
-
+    public function findPostById($postId);
 }
     
 ?>

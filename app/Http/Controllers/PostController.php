@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Http\Requests\StorePostRequest;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
-use App\Repositories\Post\PostRepositoryInterface;
-
+use App\Services\PostService;
 class PostController extends Controller
 {
-    protected $postRepo;
+    protected $postService;
 
-    public function __construct(PostRepositoryInterface $postRepo)
+    public function __construct(PostService $postService)
     {
-        $this->postRepo = $postRepo;
+        $this->postService = $postService;
     }
     /**
      * Display a listing of the resource.
@@ -26,9 +21,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->postRepo->getPosts();
+        $posts = $this->postService->getAllPosts();
         
-        return view('admin.post.index',compact('posts'));
+        return view('admin.post.index', compact('posts'));
     }
 
     /**
@@ -49,10 +44,13 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $data = $request->all();
-        $post = $this->postRepo->createPost($data);
+        try {
+            $this->postService->createPost($request->all(), auth()->user());
 
-        return redirect()->route('posts.index')->with('success','Add successfully!');
+            return redirect()->route('posts.index')->with('success', 'Add successfully!');
+        } catch (\Exception $e) {
+            abort(500);
+        }
     }
 
     /**
@@ -61,11 +59,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        $post = $this->postRepo->find($post);
-
-        return $post;
+        try {
+            return $this->postService->findPostById($id);
+        } catch (\Exception $e) {
+            abort(500);
+        }
     }
 
     /**
@@ -74,11 +74,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        $post = $this->postRepo->find($post);
-        
-        return view('admin.post.edit',compact('post'));
+        try {
+            $post = $this->postService->findPostById($id);
+            
+            return view('admin.post.edit', compact('post'));
+        } catch (\Exception $e) {
+            abort(500);
+        }
     }
 
     /**
@@ -90,10 +94,14 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, $id)
     {
-        $data = $request->all();
-        $post = $this->postRepo->updatePost($data,$id);
-
-        return redirect()->route('posts.index')->with('success','Update post successfully!');
+        try {
+            $this->postService->updatePost($request->all(), $id, auth()->user());
+            
+            return redirect()->route('posts.index')->with('success', 'Update post successfully!');
+        } catch (\Exception $e) {
+            abort(500);
+        }
+        
     }
 
     /**
@@ -104,23 +112,23 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = $this->postRepo->delete($id);
-
-        return redirect()->back()->with('success','Delete post successfully!');
+        try {
+            $this->postService->deletePost($id);
+            
+            return redirect()->back()->with('success', 'Delete post successfully!');
+        } catch (\Exception $e) {
+            abort(500);
+        }
     }
 
     public function activePost($id)
     {
-        $post = $this->postRepo->getOne($id);
-        if($post->is_active == Post::INACTIVE) {
-            $post->is_active = Post::ACTIVE;
-            $post->publicted_at = Carbon::now();
-        }else {
-            $post->is_active = Post::INACTIVE;
-            $post->publicted_at = null;
-        }
-        $post->save();
-        
-        return redirect()->back();
+        try {
+            $this->postService->activePost($id);
+            
+            return redirect()->back();
+        } catch (\Exception $e) {
+            abort(500);
+        }     
     }   
 }

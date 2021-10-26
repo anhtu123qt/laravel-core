@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\User\UserRepositoryInterface;
@@ -28,47 +27,49 @@ class UserService
             $this->userRepo->createUser($data);
 
             return true;
-        } catch (\Throwable $th) {
-            Log::error($th);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw $e;
         }
     }
 
-    public function findUserById(User $user)
+    public function findUserById($userId)
     {
         try {
-            $user = $this->userRepo->findUserById($user);
-
-            return $user;
-        } catch (\Throwable $th) {
-            Log::error($th);
+            return $this->userRepo->findUserById($userId);          
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw $e;
         }
     }
 
-    public function updateUser(array $data, User $user)
+    public function updateUser(array $data, $userId)
     {
         try {
-            $user = $this->userRepo->findUserById($user);
+            $user = $this->userRepo->findUserById($userId);
             if ($user) {
                 $user->update($data);
 
-                return $user;
+                return true;
             }
-        } catch (\Throwable $th) {
-            Log::error($th);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw $e;
         }
     }
 
-    public function deleteUser(User $user)
+    public function deleteUser($userId)
     {
         try {
-            $user = $this->userRepo->findUserById($user);
+            $user = $this->userRepo->findUserById($userId);
             if($user) {
                  $user->delete();
 
                  return true;
             }
-        } catch (\Throwable $th) {
-            Log::error($th);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw $e;
         }
     }
 

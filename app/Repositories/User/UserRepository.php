@@ -25,19 +25,19 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         try {
             return $this->model::create($data);
-        } catch (\Throwable $th) {
-            Log::error($th);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw $e;
         }
     }
 
-    public function findUserById(User $user)
+    public function findUserById($userId)
     {
         try {
-            $user = $this->model::find($user)->first();
-
-            return $user;
-        } catch (\Throwable $th) {
-            Log::error($th);
+            return $this->model::find($userId);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw $e;
         }
     }
 
