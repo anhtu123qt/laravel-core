@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,6 @@ Route::group([
     Route::resource('posts', PostController::class);
     Route::get('posts/active-post/{id}', [PostController::class, 'activePost'])->name('posts.active');
     Route::resource('users', UserController::class);
-    Route::get('dashboard', [UserController::class, 'getAdmin'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
 require __DIR__.'/auth.php';

@@ -14,5 +14,7 @@ interface UserRepositoryInterface extends RepositoryInterface
     public function findUserById($userId);
 
     public function getAdmin();
+    
+    public function getUserWithPost();
 }
 ?>

@@ -16,12 +16,18 @@ class Post extends Model
         'image',
     ];
     protected $table = 'posts';
+    
+    const STATUS_ACTIVE = 1; 
+    const STATUS_INACTIVE = 0;
 
     public function users()
     {
         return $this->belongsTo(Post::class);
     }
 
-    const STATUS_ACTIVE = 1; 
-    const STATUS_INACTIVE = 0;
+    public function scopeLastest($query)
+    {
+        $query->orderBy('created_at','DESC')->take(5)->get();
+    }
+
 }

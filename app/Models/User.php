@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function newestPost()
+    {
+        return $this->hasOne(Post::class)->orderBy('created_at','DESC');
+    }
+
     public function getNameAttribute($value)
     {
         return strtoupper($value);
@@ -62,6 +67,5 @@ class User extends Authenticatable
     public function scopeAdmin($query)
     {
         $query->where('is_admin', self::ROLE_ADMIN);
-    }
-   
+    }  
 }
