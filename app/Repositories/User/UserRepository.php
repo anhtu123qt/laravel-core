@@ -45,5 +45,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $this->model->admin()->get();
     }
+
+    public function getUserWithPost()
+    {
+        return $this->model->withCount(['newestPost', 'posts'])->take(5)->get()->sortByDESC('posts_count');
+    }
 }
 ?>

@@ -77,5 +77,9 @@ class UserService
     {
         return $this->userRepo->getAdmin();
     }
+    public function getUserWithPost()
+    {
+        return $this->userRepo->getUserWithPost();
+    }
 }
 ?>
